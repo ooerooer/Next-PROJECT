@@ -20,7 +20,9 @@ export default function RootLayout({
             </div>
             <div className={styles.content}>
                 <Navbar />
-                {children}
+                <div className={styles.childern}>
+                    {children}
+                </div>
             </div>
         </div>
     );
