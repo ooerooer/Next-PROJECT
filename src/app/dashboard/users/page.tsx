@@ -4,12 +4,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Search from '@/app/ui/dashboard/search/search'
 import Pagination from '@/app/ui/dashboard/pagination/pagination'
+import { IUsersPromise } from '@/app/types/user'
 import { fetchUsers } from '@/app/iib/data'
 
-const Users = async ({ searchParams }: { searchParams: { q: string } }) => {
+const Users = async ({ searchParams }: { searchParams: { q: string, page: string } }) => {
 
+    // const users = await fetchUsers(q);
     const q = searchParams?.q || "";
-    const users = await fetchUsers(q);
+    const page = Number(searchParams?.page) || 1;
+    const results: IUsersPromise | undefined = await fetchUsers(q, page);
 
     return (
         <div className={styles.container}>
@@ -32,7 +35,7 @@ const Users = async ({ searchParams }: { searchParams: { q: string } }) => {
                 </thead>
                 <tbody>
                     {
-                        users?.map((user) => (
+                        results?.users?.map((user) => (
 
                             <tr key={user._id}>
                                 <td>
@@ -60,7 +63,7 @@ const Users = async ({ searchParams }: { searchParams: { q: string } }) => {
                     }
                 </tbody>
             </table>
-            <Pagination />
+            <Pagination count={results?.count} />
         </div>
     )
 }
