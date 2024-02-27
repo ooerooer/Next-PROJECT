@@ -14,3 +14,13 @@ export const fetchProducts = async (q: string, page: number): Promise<IProductsP
         console.log(error);
     }
 }
+
+export const fetchProduct = async (id: string) => {
+    try {
+        connectToDB()
+        const product = await Product.findById(id);
+        return product
+    } catch (error) {
+        console.log(error);
+    }
+}

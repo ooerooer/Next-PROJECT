@@ -6,6 +6,7 @@ import Search from '@/app/ui/dashboard/search/search'
 import Pagination from '@/app/ui/dashboard/pagination/pagination'
 import { IUsersPromise } from '@/app/types/user'
 import { fetchUsers } from '@/app/iib/data'
+import { delteUser } from '@/app/iib/userActions'
 
 const Users = async ({ searchParams }: { searchParams: { q: string, page: string } }) => {
 
@@ -55,7 +56,10 @@ const Users = async ({ searchParams }: { searchParams: { q: string, page: string
                                         <Link href={`/dashboard/users/${user._id}`}>
                                             <button className={`${styles.btn} ${styles.view}`}>View</button>
                                         </Link>
-                                        <button className={`${styles.btn} ${styles.delete}`}>Delete</button>
+                                        <form action={delteUser}>
+                                            <input type="text" hidden name='id' value={user._id} />
+                                            <button className={`${styles.btn} ${styles.delete}`}>Delete</button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

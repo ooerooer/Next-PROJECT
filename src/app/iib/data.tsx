@@ -14,3 +14,13 @@ export const fetchUsers = async (q: string, page: number): Promise<IUsersPromise
         console.log(error)
     }
 }
+
+export const fetchUser = async (id: string) => {
+    try {
+        connectToDB()
+        const user = await User.findById(id);
+        return user
+    } catch (error) {
+        console.log(error);
+    }
+}

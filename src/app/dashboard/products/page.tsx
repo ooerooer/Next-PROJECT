@@ -6,6 +6,7 @@ import Search from '@/app/ui/dashboard/search/search'
 import Pagination from '@/app/ui/dashboard/pagination/pagination'
 import { fetchProducts } from '@/app/iib/dataP'
 import { IProductsPromise } from '@/app/types/products'
+import { delteProduct } from '@/app/iib/productActions'
 
 const Products = async ({ searchParams }: { searchParams: { q: string, page: string } }) => {
     const q = searchParams?.q || "";
@@ -44,14 +45,17 @@ const Products = async ({ searchParams }: { searchParams: { q: string, page: str
                                     </div>
                                 </td>
                                 <td>{products.price}</td>
-                                <td>{products.createdAt ? products.createdAt : "14.07.2010"}</td>
+                                <td>{products.createdAt ? products.createdAt.toString().slice(4, 16) : "14.07.2010"}</td>
                                 <td>{products.stock}</td>
                                 <td>
                                     <div className={styles.btns}>
-                                        <Link href={`/dashboard/users/${products._id}`}>
+                                        <Link href={`/dashboard/products/${products._id}`}>
                                             <button className={`${styles.btn} ${styles.view}`}>View</button>
                                         </Link>
-                                        <button className={`${styles.btn} ${styles.delete}`}>Delete</button>
+                                        <form action={delteProduct}>
+                                            <input type="text" hidden name='id' value={products._id} />
+                                            <button className={`${styles.btn} ${styles.delete}`}>Delete</button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
